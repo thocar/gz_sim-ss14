@@ -13,4 +13,8 @@ To use my world and my models, you've to compile my code. Therefore you've to do
 2. mkdir build && cd build
 3. cmake ../
 4. make
-5. gazebo -s ./libhomework1.so ../worlds/homework1.world (or gzserver -s ./libhomework1.so ../worlds/homework1.world and gzclient in different terminals)
+5. type ```gzserver -s ./libhomework1.so ../worlds/homework1.world``` in one terminal and execute
+6. start ```gzclient``` in a different terminal
+7. (or just ```gazebo -s ./libhomework1.so ../worlds/homework1.world``` for server and client together)
+
+now you should see a moving box and sphere
