@@ -1,29 +1,39 @@
-#include "gazebo/physics/physics.hh"
-#include "gazebo/common/common.hh"
-#include "gazebo/gazebo.hh"
+#include "homework1.h"
 
 namespace gazebo
 {
-  class Homework1Plugin : public SystemPlugin
-  {
-    public: virtual ~Homework1Plugin()
-    {
 
-    }
+void Homework1::Load(int /*_argc*/, char ** /*_argv*/)
+{
+}
 
-    public: virtual void Load(int /*_argc*/, char ** /*_argv*/)
-    {
-    }
+void Homework1::OnUpdate(const common::UpdateInfo & /*_info*/)
+{
+    physics::ModelPtr m_box = world_->GetModel("box1");
+    physics::ModelPtr m_sphere = world_->GetModel("sphere1");
 
-    private: virtual void Init()
-    {
-      physics::WorldPtr parent = physics::get_world();
-      std::string name = parent->GetName();
-      std::cout << "World Name: " << name;
-    }
+    m_box->SetLinearVel(math::Vector3(.03, 0, 0));
+    m_sphere->SetLinearVel(math::Vector3(.03, 0, 0));
+}
 
-  };
+void Homework1::Init()
+{
+    // get the World
+    world_ = physics::get_world();
+    // get world name and print
+    world_name_ = world_->GetName();
+    std::cout << "World Name: " << world_name_ << "\n";
 
-  // Register this plugin with the simulator
-  GZ_REGISTER_SYSTEM_PLUGIN(Homework1Plugin)
+    // get and print physic engine
+    phy_eng_ = world_->GetPhysicsEngine();
+    phy_eng_name_ = phy_eng_->GetType();
+    std::cout << "Physic Engine: " << phy_eng_name_ << "\n";
+
+    // get the model count
+    model_count_ = world_->GetModelCount();
+    std::cout << "Model Count: " << model_count_ << "\n";
+
+    this->updateConnection_ = event::Events::ConnectWorldUpdateBegin(boost::bind(&Homework1::OnUpdate, this, _1));
+}
+
 }

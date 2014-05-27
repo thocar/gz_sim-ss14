@@ -19,3 +19,5 @@
 *.exe
 *.out
 *.app
+
+Homework[0-9]/build
